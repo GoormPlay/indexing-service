@@ -1,5 +1,6 @@
-package com.goormplay.indexingservice.dto;
+package com.goormplay.indexingservice.dto.raw;
 
+import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,11 +10,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RatingEventDto {
+public class RawLikeToggleEventDto {
     private String userId;
     private String contentId;
+    private boolean liked;
     private String timestamp;
-    private double rating;
-    private String eventType;
-    private String page;
 }

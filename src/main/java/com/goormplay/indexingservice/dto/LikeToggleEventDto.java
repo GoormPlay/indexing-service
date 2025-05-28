@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RatingEventDto {
+public class LikeToggleEventDto {
     private String userId;
     private String contentId;
+    private boolean liked;
     private String timestamp;
-    private double rating;
     private String eventType;
     private String page;
 }
