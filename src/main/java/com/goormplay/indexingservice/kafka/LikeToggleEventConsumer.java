@@ -25,7 +25,7 @@ public class LikeToggleEventConsumer {
             log.info("Received event: {}", eventDto);
             LikeToggleEventDto dto = LikeToggleEventDto.builder()
                     .userId(eventDto.getUserId())
-                    .contentId(eventDto.getContentId())
+                    .videoId(eventDto.getVideoId())
                     .liked(eventDto.isLiked())
                     .timestamp(eventDto.getTimestamp())
                     .eventType("like_click")

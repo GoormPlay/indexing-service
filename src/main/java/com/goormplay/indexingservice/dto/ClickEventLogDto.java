@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ClickEventLogDto {
     private String userId;
-    private String contentId;
+    private String videoId;
     private String timestamp;
     private String eventType;
     private List<String> contentCategory;

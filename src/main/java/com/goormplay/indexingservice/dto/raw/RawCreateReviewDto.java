@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class RawCreateReviewDto {
     private String userId;   // 작성자 ID
     private String username;
-    private String contentId;
+    private String videoId;
     private String comment;     // 리뷰 텍스트
     private double rating;   // 별점
 }

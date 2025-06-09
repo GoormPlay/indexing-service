@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ContentPlayEventDto {
     private String userId;
-    private String contentId;
+    private String videoId;
     private String timestamp;
     private String eventType;      // e.g., "play", "pause", "end", "exit"
     private String page;

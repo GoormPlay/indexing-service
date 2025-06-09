@@ -27,7 +27,7 @@ public class RatingEventConsumer {
             log.info("Received rating event: {}", dto);
             RatingEventDto logDto =RatingEventDto.builder()
                     .userId(dto.getUserId())
-                    .contentId(dto.getContentId())
+                    .videoId(dto.getVideoId())
                     .rating(dto.getRating())
                     .timestamp(LocalDateTime.now().toString())
                     .eventType("rating_submit")

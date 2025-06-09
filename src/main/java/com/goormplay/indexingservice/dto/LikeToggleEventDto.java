@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LikeToggleEventDto {
     private String userId;
-    private String contentId;
+    private String videoId;
     private boolean liked;
     private String timestamp;
     private String eventType;

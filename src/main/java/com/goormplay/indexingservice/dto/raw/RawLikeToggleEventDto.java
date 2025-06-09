@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RawLikeToggleEventDto {
     private String userId;
-    private String contentId;
+    private String videoId;
     private boolean liked;
     private String timestamp;
 }
