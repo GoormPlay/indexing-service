@@ -26,7 +26,7 @@ public class ReviewEventConsumer {
             log.info("Received review event: {}", dto);
             CreateReviewEventDto logDto = CreateReviewEventDto.builder()
                     .userId(dto.getUserId())
-                    .contentId(dto.getContentId())
+                    .videoId(dto.getVideoId())
                     .review(dto.getComment())
                     .timestamp(LocalDateTime.now().toString())
                     .eventType("review_write")

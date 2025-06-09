@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RawContentPlayEventDto {
     private String userId;
-    private String contentId;
+    private String videoId;
     private String timestamp;
     private String eventType;      // e.g., "play", "pause", "end", "exit"
     private double watchProgress;    // current playback position in seconds

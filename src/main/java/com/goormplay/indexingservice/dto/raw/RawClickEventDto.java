@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class RawClickEventDto {
     private String userId;
-    private String contentId;
+    private String videoId;
     private String timestamp;
     private List<String> genre;
     private boolean trending;

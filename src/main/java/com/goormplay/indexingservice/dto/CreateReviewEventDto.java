@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateReviewEventDto {
     private String userId;
-    private String contentId;
+    private String videoId;
     private String timestamp;
     private String review;
     private String eventType;

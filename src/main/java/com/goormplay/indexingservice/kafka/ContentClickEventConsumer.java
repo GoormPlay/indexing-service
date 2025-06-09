@@ -27,7 +27,7 @@ public class ContentClickEventConsumer {
             if (original.isRecommended()) {
                 ClickEventLogDto logDto = ClickEventLogDto.builder()
                         .userId(original.getUserId())
-                        .contentId(original.getContentId())
+                        .videoId(original.getVideoId())
                         .timestamp(original.getTimestamp())
                         .eventType("content_recom_click")
                         .contentCategory(original.getGenre())
@@ -39,7 +39,7 @@ public class ContentClickEventConsumer {
             if (original.isTrending() || original.isLatest()) {
                 ClickEventLogDto logDto = ClickEventLogDto.builder()
                         .userId(original.getUserId())
-                        .contentId(original.getContentId())
+                        .videoId(original.getVideoId())
                         .timestamp(original.getTimestamp())
                         .eventType("content_click")
                         .page("content_detail")

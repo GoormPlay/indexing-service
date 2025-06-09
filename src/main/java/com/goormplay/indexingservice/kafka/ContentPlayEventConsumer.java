@@ -25,7 +25,7 @@ public class ContentPlayEventConsumer {
             log.info("Received event: {}", eventDto);
             ContentPlayEventDto dto = ContentPlayEventDto.builder()
                     .userId(eventDto.getUserId())
-                    .contentId(eventDto.getContentId())
+                    .videoId(eventDto.getVideoId())
                     .timestamp(eventDto.getTimestamp())
                     .eventType(eventDto.getEventType())
                     .page("content_play")

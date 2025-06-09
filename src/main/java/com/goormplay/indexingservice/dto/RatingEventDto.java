@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RatingEventDto {
     private String userId;
-    private String contentId;
+    private String videoId;
     private String timestamp;
     private double rating;
     private String eventType;
