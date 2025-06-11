@@ -2,6 +2,9 @@ package com.goormplay.indexingservice.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.goormplay.indexingservice.avro.ClickEventLog;
+import com.goormplay.indexingservice.avro.LikeToggleEvent;
+import com.goormplay.indexingservice.converter.DtoToAvroConverter;
 import com.goormplay.indexingservice.dto.ContentPlayEventDto;
 import com.goormplay.indexingservice.dto.LikeToggleEventDto;
 import com.goormplay.indexingservice.dto.raw.RawContentPlayEventDto;
@@ -16,7 +19,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 public class LikeToggleEventConsumer {
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, Object> avroKafkaTemplate;
     private final ObjectMapper objectMapper = new ObjectMapper();
     @KafkaListener(topics = "raw-like-click-events", groupId = "indexing-group2")
     public void consume(String message) {
@@ -39,10 +42,10 @@ public class LikeToggleEventConsumer {
 
     private void publish(LikeToggleEventDto dto){
         try {
-            String json = objectMapper.writeValueAsString(dto);
-            kafkaTemplate.send("content-user-events", json);
-            log.info("✅ Published processed like event: {}", json);
-        } catch (JsonProcessingException e) {
+            LikeToggleEvent avro = DtoToAvroConverter.toAvro(dto);
+            avroKafkaTemplate.send("content-user-events", avro);
+            log.info("✅ Published processed like event: {}", avro);
+        } catch (Exception e) {
             log.error("❌ Failed to serialize processed like event", e);
         }
     }

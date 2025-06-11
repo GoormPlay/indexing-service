@@ -1,6 +1,8 @@
 package com.goormplay.indexingservice.kafka;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.goormplay.indexingservice.avro.ClickEventLog;
+import com.goormplay.indexingservice.converter.DtoToAvroConverter;
 import com.goormplay.indexingservice.dto.ClickEventLogDto;
 import com.goormplay.indexingservice.dto.raw.RawClickEventDto;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +17,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class ContentClickEventConsumer {
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, Object> avroKafkaTemplate;
 
     @KafkaListener(topics = "raw-content-click-events", groupId = "indexing-group2")
     public void consume(String message) {
@@ -55,10 +57,10 @@ public class ContentClickEventConsumer {
 
     private void publish(ClickEventLogDto logDto) {
         try {
-            String json = objectMapper.writeValueAsString(logDto);
+            ClickEventLog avro = DtoToAvroConverter.toAvro(logDto);
             String topic = "content-user-events";
-            kafkaTemplate.send(topic, json);
-            log.info("✅ Published processed click event: {} topic: {}", json,topic);
+            avroKafkaTemplate.send(topic, avro);
+            log.info("✅ Published processed click event: {} topic: {}", avro,topic);
         } catch (Exception e) {
             log.error("❌ Failed to publish click event", e);
         }

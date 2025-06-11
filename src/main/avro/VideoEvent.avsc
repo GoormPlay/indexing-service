@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "name": "VideoEvent",
+  "namespace": "com.goormplay.indexingservice.avro",
+  "fields": [
+    { "name": "videoId", "type": "string" },
+    { "name": "eventType", "type": "string" },
+    {
+      "name": "timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    { "name": "currentTime", "type": "double" }
+  ]
+}

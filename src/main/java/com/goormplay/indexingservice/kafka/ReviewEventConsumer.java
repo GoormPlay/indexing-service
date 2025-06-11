@@ -2,6 +2,9 @@ package com.goormplay.indexingservice.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.goormplay.indexingservice.avro.CreateReviewEvent;
+import com.goormplay.indexingservice.avro.RatingEvent;
+import com.goormplay.indexingservice.converter.DtoToAvroConverter;
 import com.goormplay.indexingservice.dto.CreateReviewEventDto;
 import com.goormplay.indexingservice.dto.raw.RawCreateReviewDto;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +19,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @Slf4j
 public class ReviewEventConsumer {
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, Object> avroKafkaTemplate;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @KafkaListener(topics = "raw-review-write-events", groupId = "indexing-group2")
@@ -40,10 +43,10 @@ public class ReviewEventConsumer {
 
     private void publish(CreateReviewEventDto dto){
         try {
-            String json = objectMapper.writeValueAsString(dto);
-            kafkaTemplate.send("content-user-events", json);
-            log.info("✅ Published processed creating review event: {}", json);
-        } catch (JsonProcessingException e) {
+            CreateReviewEvent avro = DtoToAvroConverter.toAvro(dto);
+            avroKafkaTemplate.send("content-user-events", avro);
+            log.info("✅ Published processed creating review event: {}", avro);
+        } catch (Exception e) {
             log.error("❌ Failed to serialize processed review event", e);
         }
     }
