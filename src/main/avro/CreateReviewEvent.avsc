@@ -1,0 +1,19 @@
+{
+  "type": "record",
+  "name": "CreateReviewEvent",
+  "namespace": "com.goormplay.indexingservice.avro",
+  "fields": [
+    { "name": "userId", "type": "string" },
+    { "name": "videoId", "type": "string" },
+    {
+      "name": "timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    { "name": "review", "type": "string" },
+    { "name": "eventType", "type": "string" },
+    { "name": "page", "type": "string" }
+  ]
+}

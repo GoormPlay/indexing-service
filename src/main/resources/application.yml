@@ -7,7 +7,9 @@ spring:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      properties:
+        schema.registry.url: ${KAFKA_SCHEMA_REGISTRY_SERVER:3.38.204.173:8081}
     consumer:
       group-id: indexing-group2
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer

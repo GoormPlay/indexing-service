@@ -17,8 +17,12 @@ public class KafkaProducerConfig {
 
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
+    @Value("${spring.kafka.properties.schema.registry.url}")
+    private String schemaRegistryUrl;
+
+    // 🔹 기존 JSON 전송용 ProducerFactory (유지)
     @Bean
-    public ProducerFactory<String, String> producerFactory() {
+    public ProducerFactory<String, String> jsonProducerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -27,7 +31,23 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, String> kafkaTemplate(ProducerFactory<String, String> factory) {
-        return new KafkaTemplate<>(factory);
+    public KafkaTemplate<String, String> kafkaTemplate(ProducerFactory<String, String> jsonProducerFactory) {
+        return new KafkaTemplate<>(jsonProducerFactory);
+    }
+
+    // 🔹 Avro 전송용 ProducerFactory
+    @Bean
+    public ProducerFactory<String, Object> avroProducerFactory() {
+        Map<String, Object> configProps = new HashMap<>();
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, io.confluent.kafka.serializers.KafkaAvroSerializer.class);
+        configProps.put("schema.registry.url", schemaRegistryUrl);
+        return new DefaultKafkaProducerFactory<>(configProps);
+    }
+
+    @Bean
+    public KafkaTemplate<String, Object> avroKafkaTemplate() {
+        return new KafkaTemplate<>(avroProducerFactory());
     }
 }

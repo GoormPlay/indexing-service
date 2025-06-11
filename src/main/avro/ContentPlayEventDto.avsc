@@ -1,0 +1,18 @@
+{
+  "type": "record",
+  "name": "ContentPlayEvent",
+  "namespace": "com.goormplay.indexingservice.avro",
+  "fields": [
+    { "name": "userId", "type": "string" },
+    { "name": "videoId", "type": "string" },
+    {
+      "name": "timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    { "name": "eventType", "type": "string" },
+    { "name": "page", "type": "string" }
+  ]
+}
