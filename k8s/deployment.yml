@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: indexing-service
+  namespace: indexing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: indexing-service
+  template:
+    metadata:
+      labels:
+        app: indexing-service
+    spec:
+      containers:
+        - name: indexing-service
+          image: roin09/indexing-service:latest
+          ports:
+            - containerPort: 8084
+          envFrom:
+            - configMapRef:
+                name: indexing-service-config
+            - secretRef:
+                name: indexing-service-secret
