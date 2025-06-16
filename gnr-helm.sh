@@ -45,11 +45,11 @@ config:
 
 resources:
   requests:
-    cpu: 200m
-    memory: 512Mi
+    cpu: 100m
+    memory: 256Mi
   limits:
-    cpu: 500m
-    memory: 1Gi
+    cpu: 300m
+    memory: 512Mi
 
 hpa:
   enabled: true
@@ -61,6 +61,9 @@ topologySpreadConstraints:
   enabled: true
   maxSkew: 1
   topologyKey: topology.kubernetes.io/zone
+
+podAntiAffinity:
+  enabled: true
 
 useSecret: false
 EOF
@@ -110,6 +113,20 @@ spec:
           labelSelector:
             matchLabels:
               app: {{ .Chart.Name }}
+      {{- end }}
+      {{- if .Values.podAntiAffinity.enabled }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                topologyKey: "kubernetes.io/hostname"
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - {{ .Chart.Name }}
       {{- end }}
 EOF
 
