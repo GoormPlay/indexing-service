@@ -1,0 +1,11 @@
+image:
+  repository: roin09/indexing-service
+  tag: latest
+
+service:
+  port: 80
+  targetPort: 8084
+
+env:
+  useConfigMap: true
+  useSecret: true

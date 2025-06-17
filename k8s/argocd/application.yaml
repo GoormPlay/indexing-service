@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: indexing-service
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/GoormPlay/indexing-service.git
+    targetRevision: deploy
+    path: helm
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: indexing
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
