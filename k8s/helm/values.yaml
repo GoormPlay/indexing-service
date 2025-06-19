@@ -1,43 +1,47 @@
-image:
-  repository: roin09/indexing-service
-  tag: latest
+base-template:
+  nameOverride: indexing-service
+  fullnameOverride: indexing-service
 
-service:
-  port: 80
-  targetPort: 8084
+  image:
+    repository: roin09/indexing-service
+    tag: latest
 
-env:
-  useConfigMap: true
-  useSecret: true
+  service:
+    port: 80
+    targetPort: 8084
 
-replicaCount: 1
+  env:
+    useConfigMap: true
+    useSecret: true
 
-ingress:
-  enabled: false
-  
+  replicaCount: 1
 
-externalSecret:
-  enabled: true
-  refreshInterval: 1h
-  secretStore:
-    name: aws-secrets
-    kind: ClusterSecretStore
-  dataFromKey: indexing-service-secret
+  ingress:
+    enabled: 
+    host: 
 
-affinity:
-  nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: node-type
-              operator: In
-              values:
-                - large
+  externalSecret:
+    enabled: true
+    refreshInterval: 1h
+    secretStore:
+      name: aws-secrets
+      kind: ClusterSecretStore
+    dataFromKey: indexing-service-secret
 
-resources:
-  requests:
-    cpu: 500m
-    memory: 512Mi
-  limits:
-    cpu: 1000m
-    memory: 1024Mi
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node-type
+                operator: In
+                values:
+                  - large
+
+  resources:
+    requests:
+      cpu: 300m
+      memory: 384Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
