@@ -2,6 +2,7 @@ apiVersion: v2
 name: indexing-service
 description: Helm chart for indexing-service
 version: 0.1.0
+type: application
 dependencies:
   - name: base-template
     version: 0.1.0
